@@ -16,20 +16,38 @@ Recover password functionality with e-mail sender usign Django Email Backend
     - ```python manage.py migrate``` to generate your database
     - ```python3 manage.py createsuperuser``` to create the admin
     - ```python3 manage.py runserver``` to start the server
+- Open your browser and go to http://127.0.0.1:8000/admin/
+- Login with the admin credentials
+    - Now you can see you user and some info in admin panel
 
 ## Using the functionality
 
 We have two POST requests:
 
-        {{localhost}}/core/user/forgot-password/<br>
-        Send an e-mail with a link to recover the password.
+```{{localhost}}/core/user/forgot-password/``` Send an e-mail with a link to recover the password.
 
+> body of the request:
 
-        {{localhost}}/core/user/change-forgotten-password/
-        Allows you to enter the new password.
+        {
+            "email": "email from you user created"
+        }
 
+```{{localhost}}/core/user/change-forgotten-password/``` Allows you to enter the new password.
+
+> body of the request:
+
+        {
+            "email": "email from you user created",
+            "forgot_password_hash": "inside the redefine you passwod button sended to your email",
+            "new_password": "set a new password"
+        }
+
+> You can use [Postman](https://www.postman.com/) or [Insomnia](https://insomnia.rest/) to test the requests.<br>
 > **Note:** When you start your server the localhost generaly is http://127.0.0.1:8000/.
 ---
+
+
+# Some instructions and informations
 
 ## root
 ### setings.py
@@ -46,7 +64,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 ~~~
->First step, set some configures in settings.py. 
+> First step, set some configures in settings.py.
+> Don't forget to set the EMAIL_HOST_USER and the EMAIL_HOST_PASSWORD.
 ---
 
 ## core
